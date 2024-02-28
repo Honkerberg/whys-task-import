@@ -33,7 +33,7 @@ class Product(models.Model):
     nazev = models.CharField(max_length=100, blank=True)
     description = models.TextField(null=True)
     cena = models.DecimalField(max_digits=10, decimal_places=2)
-    mena = models.CharField(max_length=3, default='CZK')
+    mena = models.CharField(max_length=3, default="CZK")
     published_on = models.DateTimeField(null=True)
     is_published = models.BooleanField(default=False)
 
@@ -67,8 +67,10 @@ class Catalog(models.Model):
     id = models.BigAutoField(primary_key=True)
     nazev = models.CharField(max_length=100, blank=True)
     obrazek_id = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
-    products_ids = models.ManyToManyField(Product, related_name='catalogs', blank=True)
-    attributes_ids = models.ManyToManyField(Attribute, related_name='catalogs', blank=True)
+    products_ids = models.ManyToManyField(Product, related_name="catalogs", blank=True)
+    attributes_ids = models.ManyToManyField(
+        Attribute, related_name="catalogs", blank=True
+    )
 
     def __str__(self) -> str:
         return self.nazev

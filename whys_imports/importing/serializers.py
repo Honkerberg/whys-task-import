@@ -14,9 +14,10 @@ from .models import (
 
 class AttributeNameSerializer(serializers.ModelSerializer):
     nazev = serializers.CharField(required=False)
+
     class Meta:
         model = AttributeName
-        fields = ['nazev', 'kod', 'zobrazit']
+        fields = ["nazev", "kod", "zobrazit"]
 
 
 class AttributeValueSerializer(serializers.ModelSerializer):
@@ -54,7 +55,7 @@ class ProductAttributesSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def to_representation(self, instance):
-        self.fields['attribute'] = AttributeSerializer(read_only=True)
+        self.fields["attribute"] = AttributeSerializer(read_only=True)
         return super(ProductAttributesSerializer, self).to_representation(instance)
 
 
@@ -64,22 +65,26 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
     def to_representation(self, instance):
-        self.fields['product'] = ProductSerializer(read_only=True)
-        self.fields['obrazek_id'] = ImageSerializer(read_only=True)
+        self.fields["product"] = ProductSerializer(read_only=True)
+        self.fields["obrazek_id"] = ImageSerializer(read_only=True)
         return super(ProductImageSerializer, self).to_representation(instance)
 
 
 class CatalogSerializer(serializers.ModelSerializer):
-    products_ids = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all(), many=True, required=False)
-    attributes_ids = serializers.PrimaryKeyRelatedField(queryset=Attribute.objects.all(), many=True, required=False)
+    products_ids = serializers.PrimaryKeyRelatedField(
+        queryset=Product.objects.all(), many=True, required=False
+    )
+    attributes_ids = serializers.PrimaryKeyRelatedField(
+        queryset=Attribute.objects.all(), many=True, required=False
+    )
 
     class Meta:
         model = Catalog
-        fields = ['nazev', 'obrazek_id', 'products_ids', 'attributes_ids']
+        fields = ["nazev", "obrazek_id", "products_ids", "attributes_ids"]
 
     def create(self, validated_data):
-        products_data = validated_data.pop('products_ids', [])
-        attributes_data = validated_data.pop('attributes_ids', [])
+        products_data = validated_data.pop("products_ids", [])
+        attributes_data = validated_data.pop("attributes_ids", [])
 
         catalog = Catalog.objects.create(**validated_data)
 
@@ -89,5 +94,5 @@ class CatalogSerializer(serializers.ModelSerializer):
         return catalog
 
     def to_representation(self, instance):
-        self.fields['obrazek_id'] = ImageSerializer(read_only=True)
+        self.fields["obrazek_id"] = ImageSerializer(read_only=True)
         return super().to_representation(instance)
