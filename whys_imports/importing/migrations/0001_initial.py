@@ -8,79 +8,130 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='AttributeName',
+            name="AttributeName",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev', models.CharField(max_length=100)),
-                ('kod', models.CharField(max_length=100, null=True)),
-                ('zobrazit', models.BooleanField(default=False)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("nazev", models.CharField(max_length=100)),
+                ("kod", models.CharField(max_length=100, null=True)),
+                ("zobrazit", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='AttributeValue',
+            name="AttributeValue",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('hodnota', models.CharField(max_length=100)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("hodnota", models.CharField(max_length=100)),
             ],
         ),
         migrations.CreateModel(
-            name='Image',
+            name="Image",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev', models.CharField(max_length=100, null=True)),
-                ('obrazek', models.URLField()),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("nazev", models.CharField(max_length=100, null=True)),
+                ("obrazek", models.URLField()),
             ],
         ),
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev', models.CharField(max_length=100)),
-                ('description', models.TextField()),
-                ('cena', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('mena', models.CharField(max_length=3)),
-                ('published_on', models.DateTimeField(null=True)),
-                ('is_published', models.BooleanField(default=False)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("nazev", models.CharField(max_length=100)),
+                ("description", models.TextField()),
+                ("cena", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("mena", models.CharField(max_length=3)),
+                ("published_on", models.DateTimeField(null=True)),
+                ("is_published", models.BooleanField(default=False)),
             ],
         ),
         migrations.CreateModel(
-            name='Attribute',
+            name="Attribute",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev_atributu', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.attributename')),
-                ('hodnota_atributu', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.attributevalue')),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                (
+                    "nazev_atributu",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.attributename",
+                    ),
+                ),
+                (
+                    "hodnota_atributu",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.attributevalue",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Catalog',
+            name="Catalog",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev', models.CharField(max_length=100)),
-                ('attributes_ids', models.ManyToManyField(related_name='catalogs', to='importing.attribute')),
-                ('obrazek_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.image')),
-                ('products_ids', models.ManyToManyField(related_name='catalogs', to='importing.product')),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("nazev", models.CharField(max_length=100)),
+                (
+                    "attributes_ids",
+                    models.ManyToManyField(
+                        related_name="catalogs", to="importing.attribute"
+                    ),
+                ),
+                (
+                    "obrazek_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.image",
+                    ),
+                ),
+                (
+                    "products_ids",
+                    models.ManyToManyField(
+                        related_name="catalogs", to="importing.product"
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ProductAttributes',
+            name="ProductAttributes",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('attribute', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.attribute')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.product')),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                (
+                    "attribute",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.attribute",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.product",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ProductImage',
+            name="ProductImage",
             fields=[
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('nazev', models.CharField(max_length=100)),
-                ('obrazek', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.image')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='importing.product')),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("nazev", models.CharField(max_length=100)),
+                (
+                    "obrazek",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.image",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="importing.product",
+                    ),
+                ),
             ],
         ),
     ]

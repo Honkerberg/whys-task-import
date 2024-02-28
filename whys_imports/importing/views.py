@@ -27,35 +27,43 @@ from .serializers import (
 class ImportViewSet(ViewSet):
     """
     Import all data and parse through serializers.
-    """    
+    """
+
     def create(self, request, *args, **kwargs):
         data = request.data
         try:
             for item in data:
-                if 'AttributeName' in item:
-                    serializer = AttributeNameSerializer(data=item['AttributeName'])
-                elif 'AttributeValue' in item:
-                    serializer = AttributeValueSerializer(data=item['AttributeValue'])
-                if 'Attribute' in item:
-                    serializer = AttributeSerializer(data=item['Attribute'])
-                elif 'Product' in item:
-                    serializer = ProductSerializer(data=item['Product'])
-                elif 'ProductAttributes' in item:
-                    serializer = ProductAttributesSerializer(data=item['ProductAttributes'])
-                elif 'Catalog' in item:
-                    serializer = CatalogSerializer(data=item['Catalog'])
-                elif 'Image' in item:
-                    serializer = ImageSerializer(data=item['Image'])
-                elif 'ProductImage' in item:
-                    serializer = ProductImageSerializer(data=item['ProductImage'])
+                if "AttributeName" in item:
+                    serializer = AttributeNameSerializer(data=item["AttributeName"])
+                elif "AttributeValue" in item:
+                    serializer = AttributeValueSerializer(data=item["AttributeValue"])
+                if "Attribute" in item:
+                    serializer = AttributeSerializer(data=item["Attribute"])
+                elif "Product" in item:
+                    serializer = ProductSerializer(data=item["Product"])
+                elif "ProductAttributes" in item:
+                    serializer = ProductAttributesSerializer(
+                        data=item["ProductAttributes"]
+                    )
+                elif "Catalog" in item:
+                    serializer = CatalogSerializer(data=item["Catalog"])
+                elif "Image" in item:
+                    serializer = ImageSerializer(data=item["Image"])
+                elif "ProductImage" in item:
+                    serializer = ProductImageSerializer(data=item["ProductImage"])
                 if serializer.is_valid():
                     serializer.save()
                 else:
-                    return Response({"message": f"Error importing data {serializer.errors}"}, status=status.HTTP_400_BAD_REQUEST)
+                    return Response(
+                        {"message": f"Error importing data {serializer.errors}"},
+                        status=status.HTTP_400_BAD_REQUEST,
+                    )
             return Response({"message": "Data imported successfully"})
         except KeyError as e:
-            return Response({"message": f"Error importing data {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response(
+                {"message": f"Error importing data {str(e)}"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
 
 class AttributeNameViewSet(ModelViewSet):
