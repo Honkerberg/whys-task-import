@@ -14,39 +14,39 @@ from .models import (
 
 @admin.register(AttributeName)
 class AttributeNameAdmin(admin.ModelAdmin):
-    list_display = ["nazev", "kod", "zobrazit"]
+    list_display = ["id", "nazev", "kod", "zobrazit"]
 
 
 @admin.register(AttributeValue)
 class AttributeValueAdmin(admin.ModelAdmin):
-    list_display = ["hodnota"]
+    list_display = ["id", "hodnota"]
 
 
 @admin.register(Attribute)
 class AttributeAdmin(admin.ModelAdmin):
-    list_display = ["nazev_atributu", "hodnota_atributu"]
+    list_display = ["id", "nazev_atributu_id", "hodnota_atributu_id"]
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ["nazev", "cena", "mena", "published_on", "is_published"]
+    list_display = ["id", "nazev", "cena", "mena", "published_on", "is_published"]
 
 
 @admin.register(ProductAttributes)
 class ProductAttributesAdmin(admin.ModelAdmin):
-    list_display = ["attribute", "product"]
+    list_display = ["id", "attribute", "product"]
 
 
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
-    list_display = ["nazev", "obrazek"]
+    list_display = ["id", "nazev", "obrazek"]
 
 
 @admin.register(ProductImage)
 class ProductImageAdmin(admin.ModelAdmin):
-    list_display = ["nazev", "product", "obrazek"]
+    list_display = ["id", "nazev", "product", "obrazek_id"]
 
 
 @admin.register(Catalog)
 class CatalogAdmin(admin.ModelAdmin):
-    list_display = ["nazev", "obrazek_id"]
+    list_display = ["id", "nazev", "obrazek_id"]
